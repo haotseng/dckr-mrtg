@@ -29,14 +29,17 @@ if [ -n "${HOSTS}" ]; then
         if [ -z "${NAME}" ]; then
             NAME="${HOST}"
         fi
+#        [[ ! -f "${MRTGDIR}/conf.d/${NAME}.cfg" ]] && /usr/bin/cfgmaker \
+#            --ifref=name \
+#            --global "WorkDir: ${WEBDIR}" \
+#            --global "Options[_]: growright, bits" \
+#            --global "EnableIPv6: ${ENABLE_V6}" \
+#            --global "LogFormat: rrdtool" \
+#            --snmp-options=:${PORT:-"161"}::::${VERSION:-"2"} \
+#            --output=${MRTGDIR}/conf.d/${NAME}.cfg "${COMMUNITY}@${HOST}"
         [[ ! -f "${MRTGDIR}/conf.d/${NAME}.cfg" ]] && /usr/bin/cfgmaker \
-            --ifref=name \
-            --global "WorkDir: ${WEBDIR}" \
-            --global "Options[_]: growright, bits" \
-            --global "EnableIPv6: ${ENABLE_V6}" \
-            --global "LogFormat: rrdtool" \
-            --snmp-options=:${PORT:-"161"}::::${VERSION:-"2"} \
             --output=${MRTGDIR}/conf.d/${NAME}.cfg "${COMMUNITY}@${HOST}"
+
     done
 else
     COMMUNITY=${1:-"public"}
@@ -48,12 +51,14 @@ else
     if [ -z "${NAME}" ]; then
         NAME="${HOST}"
     fi
+#    [[ ! -f "${MRTGDIR}/conf.d/${NAME}.cfg" ]] && /usr/bin/cfgmaker \
+#            --ifref=name \
+#            --global "Options[_]: growright, bits" \
+#            --global "EnableIPv6: ${ENABLE_V6}" \
+#            --global "LogFormat: rrdtool" \
+#            --snmp-options=:${PORT}::::${VERSION} \
+#            --output=${MRTGDIR}/conf.d/${NAME}.cfg "${COMMUNITY}@${HOST}"
     [[ ! -f "${MRTGDIR}/conf.d/${NAME}.cfg" ]] && /usr/bin/cfgmaker \
-            --ifref=name \
-            --global "Options[_]: growright, bits" \
-            --global "EnableIPv6: ${ENABLE_V6}" \
-            --global "LogFormat: rrdtool" \
-            --snmp-options=:${PORT}::::${VERSION} \
             --output=${MRTGDIR}/conf.d/${NAME}.cfg "${COMMUNITY}@${HOST}"
 fi
 
