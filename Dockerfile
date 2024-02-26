@@ -20,9 +20,9 @@ RUN apk add --update --no-cache \
       rrdtool \
       rrdtool-cgi \
       shadow \
-      tzdata
-
-RUN apk upgrade --no-cache \
+      tzdata \
+      alpine-conf \
+    && apk upgrade --no-cache \
     && rm -rf /var/cache/apk/* \
     && mkdir -p /etc/mrtg/conf.d \
     && mkdir -p /mrtg/cgi-bin /mrtg/html /mrtg/fonts
